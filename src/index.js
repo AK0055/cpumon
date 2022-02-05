@@ -31,7 +31,7 @@ const createWindow = () => {
       mainWindow.webContents.send('total-mem',os.totalmem()/1024);
     });
   },1000);
-  window.onload = function() {
+   /*window.onload = function() {
 
    
     } */
