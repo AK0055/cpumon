@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <meta charset="UTF-8">
+    <title>CPU Monitor</title>
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="circular-progress">
+        <div class="value-container">0%</div>
+      </div>
+    </div>
+     <div class="infobox">
+      <div class="box">
+        <span class="label">CPU (%)</span>
+        <span id="cpu">-</span>
+      </div>
+      <div class="box">
+        <span class="label">Free Mem (%)</span>
+        <span id="mem">-</span>
+      </div>
+      <div class="box">
+        <span class="label">Total Mem (GB)</span>
+        <span id="total-mem">-</span>
+      </div>
+     </div>
+   
+    <script>
+      
+      const electron = require('electron');
+      const ipcRenderer = electron.ipcRenderer;
+
+      ipcRenderer.on('cpu',(event,data) => {
+        document.getElementById('cpu').innerHTML = data.toFixed(2);
+        let progressBar = document.querySelector(".circular-progress");
+        let valueContainer = document.querySelector(".value-container");
+        let progressValue = data.toFixed(2);
+        let progressEndValue = data.toFixed(2);
+        let speed = 50;
+        let progress = setInterval(() => {
+          valueContainer.textContent = `${progressValue}%`;
+          progressBar.style.background = `conic-gradient(
+              #4d5bf9 ${progressValue * 3.6}deg,
+              #cadcff ${progressValue * 3.6}deg
+          )`;
+          if (progressValue == progressEndValue) {
+            clearInterval(progress);
+          }
+        }, speed);
+      });
+      ipcRenderer.on('mem',(event,data) => {
+        document.getElementById('mem').innerHTML = data.toFixed(2);
+      });
+      ipcRenderer.on('total-mem',(event,data) => {
+        document.getElementById('total-mem').innerHTML = data.toFixed(2);
+      });
+    </script>
+  </body>
+</html>
