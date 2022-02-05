@@ -27,31 +27,14 @@ const createWindow = () => {
       //console.log(os.freememPercentage()*100)
       cpuusage=v*100;
       mainWindow.webContents.send('cpu',v*100);
-      //var elem = document.getElementById('percent');
-      //mainWindow.getWebContents("percent").classList.toggle(`c100 p${v*100} blue`);
-
-      //elem.style.color = newColor;
       mainWindow.webContents.send('mem',os.freememPercentage()*100);
       mainWindow.webContents.send('total-mem',os.totalmem()/1024);
     });
   },1000);
   window.onload = function() {
 
-    var si = require('systeminformation');
-    
-    si.cpu(function(data) {
-    console.log(data);
-    });
-    
-    si.cpuCurrentspeed(function(data) {
-    console.log(data);
-    });
-    
-    si.cpuTemperature(function(data) {
-    console.log(data);
-    });
-    
-    }
+   
+    } */
 };
 
 // This method will be called when Electron has finished
