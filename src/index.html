@@ -52,10 +52,16 @@
         let speed = 50;
         let progress = setInterval(() => {
           valueContainer.textContent = `CPU\n${progressValue}%`;
+          if(progressValue>80){
           progressBar.style.background = `conic-gradient(
+            #ff8080 ${progressValue * 3.6}deg,
+              #cadcff ${progressValue * 3.6}deg)`;
+          }
+          else{
+            progressBar.style.background = `conic-gradient(
               #4d5bf9 ${progressValue * 3.6}deg,
-              #cadcff ${progressValue * 3.6}deg
-          )`;
+              #cadcff ${progressValue * 3.6}deg)`;
+          }
           if (progressValue == progressEndValue) {
             clearInterval(progress);
           }
@@ -71,9 +77,16 @@
           let speed = 50;
           let progress = setInterval(() => {
             valueContainer.textContent = `Free-mem\n${progressValue}%`;
+            if(progressValue<20){
+          progressBar.style.background = `conic-gradient(
+            #ff8080 ${progressValue * 3.6}deg,
+              #cadcff ${progressValue * 3.6}deg)`;
+          }
+          else{
             progressBar.style.background = `conic-gradient(
-                #4d5bf9 ${progressValue * 3.6}deg,
-                #cadcff ${progressValue * 3.6}deg)`;
+              #4d5bf9 ${progressValue * 3.6}deg,
+              #cadcff ${progressValue * 3.6}deg)`;
+          }
             if (progressValue == progressEndValue) {
               clearInterval(progress);
             }
@@ -93,9 +106,16 @@
         let speed = 50;
         let progress = setInterval(() => {
           valueContainer.textContent = `Temp\n${progressValue}°C`;
+          if(progressValue>80){
           progressBar.style.background = `conic-gradient(
+            #ff8080 ${progressValue * 3.6}deg,
+              #cadcff ${progressValue * 3.6}deg)`;
+          }
+          else{
+            progressBar.style.background = `conic-gradient(
               #4d5bf9 ${progressValue * 3.6}deg,
               #cadcff ${progressValue * 3.6}deg)`;
+          }
           if (progressValue == progressEndValue) {
             clearInterval(progress);
           }
