@@ -11,6 +11,12 @@
       <div class="circular-progress">
         <div class="value-container">0%</div>
       </div>
+      <div class="circular-progress1">
+        <div class="value-container1">0%</div>
+      </div>
+      <div class="circular-progress2">
+        <div class="value-container2">0 °C</div>
+      </div>
     </div>
      <div class="infobox">
       <div class="box">
@@ -18,12 +24,16 @@
         <span id="cpu">-</span>
       </div>
       <div class="box">
-        <span class="label">Free Mem (%)</span>
+        <span class="label1">Free Mem (%)</span>
         <span id="mem">-</span>
       </div>
       <div class="box">
-        <span class="label">Total Mem (GB)</span>
+        <span class="label2">Total Mem (GB)</span>
         <span id="total-mem">-</span>
+      </div>
+      <div class="box">
+        <span class="label3">Temperature (°C)</span>
+        <span id="temp">-</span>
       </div>
      </div>
    
@@ -31,7 +41,7 @@
       
       const electron = require('electron');
       const ipcRenderer = electron.ipcRenderer;
-
+      const ipcRenderer1 = electron.ipcRenderer;
       ipcRenderer.on('cpu',(event,data) => {
         document.getElementById('cpu').innerHTML = data.toFixed(2);
         let progressBar = document.querySelector(".circular-progress");
@@ -40,7 +50,7 @@
         let progressEndValue = data.toFixed(2);
         let speed = 50;
         let progress = setInterval(() => {
-          valueContainer.textContent = `${progressValue}%`;
+          valueContainer.textContent = `CPU\n${progressValue}%`;
           progressBar.style.background = `conic-gradient(
               #4d5bf9 ${progressValue * 3.6}deg,
               #cadcff ${progressValue * 3.6}deg
@@ -50,11 +60,45 @@
           }
         }, speed);
       });
-      ipcRenderer.on('mem',(event,data) => {
-        document.getElementById('mem').innerHTML = data.toFixed(2);
+      ipcRenderer1.on('mem',(event,data) => {
+          document.getElementById('mem').innerHTML = data.toFixed(2);
+
+          let progressBar = document.querySelector(".circular-progress1");
+          let valueContainer = document.querySelector(".value-container1");
+          let progressValue = data.toFixed(2);
+          let progressEndValue = data.toFixed(2);
+          let speed = 50;
+          let progress = setInterval(() => {
+            valueContainer.textContent = `Free-mem\n${progressValue}%`;
+            progressBar.style.background = `conic-gradient(
+                #4d5bf9 ${progressValue * 3.6}deg,
+                #cadcff ${progressValue * 3.6}deg)`;
+            if (progressValue == progressEndValue) {
+              clearInterval(progress);
+            }
+          }, speed);
       });
       ipcRenderer.on('total-mem',(event,data) => {
         document.getElementById('total-mem').innerHTML = data.toFixed(2);
+        
+      });
+      ipcRenderer.on('temp',(event,data) => {
+        document.getElementById('temp').innerHTML = data.toFixed(2);
+
+        let progressBar = document.querySelector(".circular-progress2");
+        let valueContainer = document.querySelector(".value-container2");
+        let progressValue = data.toFixed(2);
+        let progressEndValue = data.toFixed(2);
+        let speed = 50;
+        let progress = setInterval(() => {
+          valueContainer.textContent = `Temp\n${progressValue}°C`;
+          progressBar.style.background = `conic-gradient(
+              #4d5bf9 ${progressValue * 3.6}deg,
+              #cadcff ${progressValue * 3.6}deg)`;
+          if (progressValue == progressEndValue) {
+            clearInterval(progress);
+          }
+        }, speed);
       });
     </script>
   </body>

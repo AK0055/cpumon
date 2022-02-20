@@ -1,14 +1,13 @@
+
 var si = require('systeminformation');
-setInterval(()=>{
-    
-    si.osInfo(function(data) {
-    console.log(data);
+var ip = require('ip');
+var sysInfo = {temp:0};
+
+function updateSi() { 
+        si.cpuTemperature(function(data) {
+          sysInfo.temp = data.max;
+          console.log(sysInfo.temp);
     });
-    
-    
-    
-    si.cpuTemperature(function(data) {
-    console.log(data);
-    });
-    
-    },1000);
+  
+  }
+

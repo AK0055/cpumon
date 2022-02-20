@@ -1,18 +1,19 @@
 const { app, BrowserWindow } = require('electron');
 const os = require('os-utils');
 const path = require('path');
-
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
-  app.quit();
-}
+try {
+  require('electron-reloader')(module, {
+      debug: true,
+      watchRenderer: true
+  });
+} catch (_) { console.log('Error'); }  
 
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1000,
     height: 600,
-    icon: __dirname + '/icon.ico',
+    icon: __dirname + '/appico.jpg',
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
@@ -21,17 +22,27 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  var si = require('systeminformation');
+  var ip = require('ip');
+  var sysInfo = {temp:0};
   
+  function updateSi() { 
+          si.cpuTemperature(function(data) {
+            sysInfo.temp = data.max;
+            
+      });
+      return sysInfo.temp;
+    }
   setInterval(() => {
     os.cpuUsage(function(v){
-      //console.log(os.freememPercentage()*100)
       cpuusage=v*100;
       mainWindow.webContents.send('cpu',v*100);
       mainWindow.webContents.send('mem',os.freememPercentage()*100);
       mainWindow.webContents.send('total-mem',os.totalmem()/1024);
+      mainWindow.webContents.send('temp',updateSi());
     });
   },1000);
-   /*window.onload = function() {
+   /* window.onload = function() {
 
    
     } */
