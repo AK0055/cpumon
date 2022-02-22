@@ -47,7 +47,7 @@ body {
   border-radius: 50%;
 }
 .circular-progress1 {
-  position:fixed; left:80px; top:120px;
+  position:fixed; left:80px; top:-70px;
   height: 200px;
   width: 200px;
   border-radius: 50%;
@@ -63,7 +63,7 @@ body {
   border-radius: 50%;
 }
 .circular-progress2 {
-  position:fixed; left:80px; top:370px;
+  position:fixed; left:80px; top:0px;
   height: 200px;
   width: 200px;
   border-radius: 50%;
@@ -95,7 +95,7 @@ body {
 }
 .value-container2 {
   position: relative;
-  left: 30px;
+  left: 0px;
   font-family: "Poppins", sans-serif;
   font-size: 30px;
   font-weight: 600;

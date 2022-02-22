@@ -6,19 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CPU Monitor</title>
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   </head>
   <body>
     <div class="container">
-      <div class="circular-progress">
+      <div class="circular-progress w3-animate-left">
         <div class="value-container">0%</div>
       </div>
-      <div class="circular-progress1">
+      <div class="circular-progress1 w3-animate-left">
         <div class="value-container1">0%</div>
       </div>
-      <div class="circular-progress2">
+      <div class="circular-progress2 w3-animate-left">
         <div class="value-container2">0 °C</div>
       </div>
     </div>
+    
      <div class="infobox">
       <div class="box">
         <span class="label">CPU (%)</span>
@@ -105,7 +107,7 @@
         let progressEndValue = data.toFixed(2);
         let speed = 50;
         let progress = setInterval(() => {
-          valueContainer.textContent = `Temp\n${progressValue}°C`;
+          valueContainer.textContent = `${progressValue}°C`;
           if(progressValue>80){
           progressBar.style.background = `conic-gradient(
             #ff8080 ${progressValue * 3.6}deg,
