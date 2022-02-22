@@ -21,11 +21,21 @@ body {
   background-color: transparent;
   position: absolute;
   transform: translate(-50%, -50%);
-  top: 50%;
+  top: 45%;
   left: 25%;
  
   display: grid;
   place-items: center;
+}
+.zoom {
+  padding: 50px;
+  transition: transform .2s;
+}
+
+.zoom:hover {
+  -ms-transform: scale(1.1); /* IE 9 */
+  -webkit-transform: scale(1.1); /* Safari 3-8 */
+  transform: scale(1.1); 
 }
 .circular-progress {
   position: absolute;
@@ -81,15 +91,16 @@ body {
 .value-container {
   position: relative;
   font-family: "Poppins", sans-serif;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 600;
   color:#efa;
 }
 .value-container1 {
   position: relative;
-  left: 30px;
+  left: 0px;
+  top: -10px;
   font-family: "Poppins", sans-serif;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 600;
   color:#efa;
 }
@@ -97,19 +108,20 @@ body {
   position: relative;
   left: 0px;
   font-family: "Poppins", sans-serif;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 600;
   color:#efa;
 }
 .infobox{
   align-items: right;
+  right:-150px;
 }
 .box {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-size: 70px;
+  font-size: 60px;
   line-height: 0.95;
   padding: 10px 20px;    
 }

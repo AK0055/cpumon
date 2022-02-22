@@ -37,6 +37,7 @@ const createWindow = () => {
     os.cpuUsage(function(v){
       cpuusage=v*100;
       mainWindow.webContents.send('cpu',v*100);
+      //mainWindow.webContents.send('sysload',os.loadavg(1));
       mainWindow.webContents.send('mem',os.freememPercentage()*100);
       mainWindow.webContents.send('total-mem',os.totalmem()/1024);
       mainWindow.webContents.send('temp',updateSi());

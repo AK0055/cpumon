@@ -10,13 +10,13 @@
   </head>
   <body>
     <div class="container">
-      <div class="circular-progress w3-animate-left">
+      <div class="circular-progress w3-animate-left zoom">
         <div class="value-container">0%</div>
       </div>
-      <div class="circular-progress1 w3-animate-left">
+      <div class="circular-progress1 w3-animate-left zoom">
         <div class="value-container1">0%</div>
       </div>
-      <div class="circular-progress2 w3-animate-left">
+      <div class="circular-progress2 w3-animate-left zoom">
         <div class="value-container2">0 °C</div>
       </div>
     </div>
@@ -26,6 +26,7 @@
         <span class="label">CPU (%)</span>
         <span id="cpu">-</span>
       </div>
+      
       <div class="box">
         <span class="label1">Free Mem (%)</span>
         <span id="mem">-</span>
@@ -69,6 +70,10 @@
           }
         }, speed);
       });
+      ipcRenderer.on('sysload',(event,data) => {
+        document.getElementById('sysload').innerHTML = data.toFixed(2);
+        
+      });
       ipcRenderer1.on('mem',(event,data) => {
           document.getElementById('mem').innerHTML = data.toFixed(2);
 
@@ -78,7 +83,7 @@
           let progressEndValue = data.toFixed(2);
           let speed = 50;
           let progress = setInterval(() => {
-            valueContainer.textContent = `Free-mem\n${progressValue}%`;
+            valueContainer.textContent = `Free-memory\n${progressValue}%`;
             if(progressValue<20){
           progressBar.style.background = `conic-gradient(
             #ff8080 ${progressValue * 3.6}deg,

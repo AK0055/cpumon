@@ -1,12 +1,18 @@
 body{
-  background-color: #222;
+  background-image: url("cpubg.jpg");
+  background-size: cover;
+}
+.header{
+  text-align: center;
+  color:white;
+  top: 150px;
 }
 .center-box{
   position: absolute;
   top:50%;
   left:50%;
   transform: translate(-50%,-50%);
-  border: 2px solid white;
+  border: 2px solid rgba(255, 255, 255, 0.822);
   border-radius: 40px;
   width:300px;
   height:320px;
@@ -18,7 +24,7 @@ body{
   margin: 20px 0;
   border: 2px solid white;
   border-radius: 10px;
-  font-size: 12pt;
+  font-size: 10pt;
   color:green;
 }
 .btn-style{
