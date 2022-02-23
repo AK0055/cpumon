@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CPU Monitor</title>
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="form.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script type="module" src="data.js"></script>
   </head>
   <body>
     <div class="container">
@@ -40,94 +42,12 @@
         <span id="temp">-</span>
       </div>
      </div>
-   
+     <!-- <button id="log-out-btn" class="btn-style">LOG OUT</button> -->
+     <div class="logoutLblPos">
+         <button id="log-out-btn" class="btn-style w3-bar-item">LOG OUT</button>
+    </div>
     <script>
       
-      const electron = require('electron');
-      const ipcRenderer = electron.ipcRenderer;
-      const ipcRenderer1 = electron.ipcRenderer;
-      ipcRenderer.on('cpu',(event,data) => {
-        document.getElementById('cpu').innerHTML = data.toFixed(2);
-        let progressBar = document.querySelector(".circular-progress");
-        let valueContainer = document.querySelector(".value-container");
-        let progressValue = data.toFixed(2);
-        let progressEndValue = data.toFixed(2);
-        let speed = 50;
-        let progress = setInterval(() => {
-          valueContainer.textContent = `CPU\n${progressValue}%`;
-          if(progressValue>80){
-          progressBar.style.background = `conic-gradient(
-            #ff8080 ${progressValue * 3.6}deg,
-              #cadcff ${progressValue * 3.6}deg)`;
-          }
-          else{
-            progressBar.style.background = `conic-gradient(
-              #4d5bf9 ${progressValue * 3.6}deg,
-              #cadcff ${progressValue * 3.6}deg)`;
-          }
-          if (progressValue == progressEndValue) {
-            clearInterval(progress);
-          }
-        }, speed);
-      });
-      ipcRenderer.on('sysload',(event,data) => {
-        document.getElementById('sysload').innerHTML = data.toFixed(2);
-        
-      });
-      ipcRenderer1.on('mem',(event,data) => {
-          document.getElementById('mem').innerHTML = data.toFixed(2);
-
-          let progressBar = document.querySelector(".circular-progress1");
-          let valueContainer = document.querySelector(".value-container1");
-          let progressValue = data.toFixed(2);
-          let progressEndValue = data.toFixed(2);
-          let speed = 50;
-          let progress = setInterval(() => {
-            valueContainer.textContent = `Free-memory\n${progressValue}%`;
-            if(progressValue<20){
-          progressBar.style.background = `conic-gradient(
-            #ff8080 ${progressValue * 3.6}deg,
-              #cadcff ${progressValue * 3.6}deg)`;
-          }
-          else{
-            progressBar.style.background = `conic-gradient(
-              #4d5bf9 ${progressValue * 3.6}deg,
-              #cadcff ${progressValue * 3.6}deg)`;
-          }
-            if (progressValue == progressEndValue) {
-              clearInterval(progress);
-            }
-          }, speed);
-      });
-      ipcRenderer.on('total-mem',(event,data) => {
-        document.getElementById('total-mem').innerHTML = data.toFixed(2);
-        
-      });
-      ipcRenderer.on('temp',(event,data) => {
-        document.getElementById('temp').innerHTML = data.toFixed(2);
-
-        let progressBar = document.querySelector(".circular-progress2");
-        let valueContainer = document.querySelector(".value-container2");
-        let progressValue = data.toFixed(2);
-        let progressEndValue = data.toFixed(2);
-        let speed = 50;
-        let progress = setInterval(() => {
-          valueContainer.textContent = `${progressValue}°C`;
-          if(progressValue>80){
-          progressBar.style.background = `conic-gradient(
-            #ff8080 ${progressValue * 3.6}deg,
-              #cadcff ${progressValue * 3.6}deg)`;
-          }
-          else{
-            progressBar.style.background = `conic-gradient(
-              #4d5bf9 ${progressValue * 3.6}deg,
-              #cadcff ${progressValue * 3.6}deg)`;
-          }
-          if (progressValue == progressEndValue) {
-            clearInterval(progress);
-          }
-        }, speed);
-      });
     </script>
   </body>
 </html>

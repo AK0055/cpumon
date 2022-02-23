@@ -33,20 +33,19 @@ const createWindow = () => {
       });
       return sysInfo.temp;
     }
+    var cpuusage=0;
   setInterval(() => {
     os.cpuUsage(function(v){
       cpuusage=v*100;
       mainWindow.webContents.send('cpu',v*100);
+      //console.log(cpuusage);
       //mainWindow.webContents.send('sysload',os.loadavg(1));
       mainWindow.webContents.send('mem',os.freememPercentage()*100);
       mainWindow.webContents.send('total-mem',os.totalmem()/1024);
       mainWindow.webContents.send('temp',updateSi());
     });
   },1000);
-   /* window.onload = function() {
-
    
-    } */
 };
 
 // This method will be called when Electron has finished

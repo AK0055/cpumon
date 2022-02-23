@@ -1,6 +1,5 @@
 body{
   background-image: url("cpubg.jpg");
-  background-size: cover;
 }
 .header{
   text-align: center;
@@ -56,4 +55,10 @@ body{
   transform: translate(-50%,-50%);
   font-size: 16pt;
   color: white;
+}
+.logoutLblPos{
+
+  position:fixed;
+  right:10px;
+  top:20px;
 }
