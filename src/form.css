@@ -62,3 +62,9 @@ body{
   right:10px;
   top:20px;
 }
+.logoutLblPos2{
+
+  position:fixed;
+  right:10px;
+  top:80px;
+}

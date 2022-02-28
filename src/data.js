@@ -12,9 +12,12 @@ import {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+var cpucount = 0;
+var memcount = 0;
+var tempcount = 0;
 
 class Monitor {
-    monitorsRef = db.collection("monitor");
+    monitorsRef = db.collection("monitor3");
   
     async addcpu(cpuval,time) {
   
@@ -50,13 +53,57 @@ class Monitor {
   
         try {
             console.log(cpuval);console.log(fmemval);console.log(tempval);console.log(timeval);
-            db.collection('monitor2').doc(timeval).set({cpu:cpuval,fmem:fmemval,temp: tempval});
+            db.collection('monitor3').doc(timeval).set({cpu:parseFloat(cpuval),fmem:parseFloat(fmemval),temp: parseFloat(tempval)});
   
         } catch (error) {
             console.error('Error Adding', error)
         }
 
     } 
+    async dispcpu(){
+    db.collection("monitor3").where("cpu", ">", 80.0)
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            //console.log(doc.id, " => ", doc.data());
+            cpucount++;
+        });
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+    });
+
+    }
+    async dispmem(){
+        db.collection("monitor3").where("fmem", "<", 20.0)
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                //console.log(doc.id, " => ", doc.data());
+                memcount++;
+            });
+        })
+        .catch((error) => {
+            console.log("Error getting documents: ", error);
+        });
+    
+        }async disptemp(){
+            db.collection("monitor3").where("temp", ">", 80.0)
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    //console.log(doc.id, " => ", doc.data());
+                    tempcount++;
+                });
+            })
+            .catch((error) => {
+                console.log("Error getting documents: ", error);
+            });
+        
+            }
   
     async getAll() {
         const monitors = [];
@@ -87,25 +134,41 @@ class Monitor {
         return monitor;
     }
   
-    async delete(id) {
+    async delete() {
         try {
-            await this.monitorsRef.doc(id).delete();
+            await this.monitorsRef.delete();
             console.log('monitor is deleted with id: ', id);
         } catch (error) {
             console.error('Error in deleting monitor: ', error);
         }
     }
+    async updateCollection() {
+        //const ref = firestore.collection(this.monitorsRef);
+        const collection = await db
+                .collection("monitor3")
+                .get()
+                collection.forEach(doc=> {
+                doc.ref
+                .update({
+                    cpu: 0,fmem:100,temp:0})
+            })
+      }
+    
   }
+  const Obj = new Monitor();
   try {
     require('electron-reloader')(module, {
         debug: true,
         watchRenderer: true
     });
   } catch (_) { console.log('Error'); }  
-  async function main() {
-    const Obj = new Monitor();
-    console.log(await Obj.getAll());
-  }
+  
+  document.getElementById("reset").addEventListener('click', function(){
+    tempcount=cpucount=memcount=0;console.log(cpucount);
+    Obj.updateCollection();
+
+  });
+  
 document.getElementById("log-out-btn").addEventListener('click', function(){
     signOut(auth).then(() => {
         window.location.replace("form.html");
@@ -117,12 +180,14 @@ document.getElementById("log-out-btn").addEventListener('click', function(){
 const electron = require('electron');
 const ipcRenderer = electron.ipcRenderer;
 const ipcRenderer1 = electron.ipcRenderer;
-var usage={cpuusage:0,fmem:0,temp:0,dattime:""};
+var usage={cpuusage:0.0,fmem:0.0,temp:0.0,dattime:""};
 var all=[];
-
+Obj.updateCollection();
 
 ipcRenderer.on('cpu',(event,data) => {
 document.getElementById('cpu').innerHTML = data.toFixed(2);
+if(cpucount>5){document.getElementById('cpuS').innerHTML = "HIGH";}
+else document.getElementById('cpuS').innerHTML = "Normal";
 let progressBar = document.querySelector(".circular-progress");
 let valueContainer = document.querySelector(".value-container");
 let progressValue = data.toFixed(2);
@@ -148,6 +213,8 @@ let progress = setInterval(() => {
 
 ipcRenderer1.on('mem',(event,data) => {
     document.getElementById('mem').innerHTML = data.toFixed(2);
+    if(memcount>5){document.getElementById('memS').innerHTML = "LOW";}
+else document.getElementById('memS').innerHTML = "Normal";
     let progressBar = document.querySelector(".circular-progress1");
     let valueContainer = document.querySelector(".value-container1");
     let progressValue = data.toFixed(2);
@@ -176,6 +243,8 @@ document.getElementById('total-mem').innerHTML = data.toFixed(2);
 });
 ipcRenderer.on('temp',(event,data) => {
 document.getElementById('temp').innerHTML = data.toFixed(2);
+if(tempcount>5){document.getElementById('tempS').innerHTML = "HIGH";}
+else document.getElementById('tempS').innerHTML = "Normal";
 let progressBar = document.querySelector(".circular-progress2");
 let valueContainer = document.querySelector(".value-container2");
 let progressValue = data.toFixed(2);
@@ -198,11 +267,13 @@ let progress = setInterval(() => {
     }
 }, speed);
 });
-const Obj = new Monitor();
+
 ipcRenderer.on('all',(event,data) => {
     all = data;
     console.log(all);
     usage.cpuusage=all[0].toFixed(2);usage.fmem=all[1].toFixed(2);usage.temp=all[2].toFixed(2);usage.dattime=all[3];
     console.log(usage);
-    Obj.addAll(usage.cpuusage,usage.fmem,usage.temp,usage.dattime);
+    Obj.addAll(parseFloat(all[0]),parseFloat(all[1]),parseFloat(all[2]),all[3]);
+    Obj.dispcpu();Obj.dispmem();Obj.disptemp();
+    Obj.getAll();
 });

@@ -56,7 +56,7 @@ const createWindow = () => {
           mainWindow.webContents.send('temp',updateSi());
           mainWindow.webContents.send('all',giveall(all));
         });
-      },1000);
+      },3000);
       
   
     
