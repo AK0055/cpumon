@@ -8,9 +8,33 @@
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="form.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script type="module" src="data.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-firestore.js"></script>
+
+    <!-- Add Configuration keys -->
+    <script>
+        const firebaseConfig = {
+    apiKey: "AIzaSyB2nGrX4pqoS0UfvPsqDbLnrPknpCmwOSw",
+    authDomain: "cpumon.firebaseapp.com",
+    projectId: "cpumon",
+    storageBucket: "cpumon.appspot.com",
+    messagingSenderId: "578477960455",
+    appId: "1:578477960455:web:20d8e244a9896d034ea9a2"
+  };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Initialize Firestore
+        const db = firebase.firestore();
+    </script>
+    <script type="module" src="data.js"></script>    
+      <script type="module" src="form.js"></script> 
+      <script type="module" src="index.js"></script> 
+
   </head>
   <body>
+   
     <div class="container">
       <div class="circular-progress w3-animate-left zoom">
         <div class="value-container">0%</div>
@@ -42,12 +66,8 @@
         <span id="temp">-</span>
       </div>
      </div>
-     <!-- <button id="log-out-btn" class="btn-style">LOG OUT</button> -->
      <div class="logoutLblPos">
          <button id="log-out-btn" class="btn-style w3-bar-item">LOG OUT</button>
     </div>
-    <script>
-      
-    </script>
   </body>
 </html>

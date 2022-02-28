@@ -3,7 +3,9 @@
   <title>CPU monitor</title>
   <link rel="stylesheet" href="form.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
     <script type="module" src="form.js"></script>
+    <script type="module" src="config.js"></script>
   </head>
   <body>
     <div class="header">
@@ -21,14 +23,31 @@
      <h3>Sign Up</h3>
      <input type="email" id="register-email" class="text-field" name="register-email" placeholder="Email" required/><br>
      <input type="password" id="register-password" class="text-field" name="register-password" placeholder="Password" required/><br>
-    <button id="register-btn" class="btn-style">Register</button><br>
-     <button id="log-btn" class="an-btn">have an account? Login</button>
+    <button id="register-btn" class="btn-style">Sign Up</button><br>
+     <button id="log-btn" class="an-btn">Have an account? Login</button>
+
   </div>
 
-<div id="result-box">
-  <h3 id="result"></h3><br>
-     <button id="log-out-btn" class="btn-style">LOG OUT</button>
-</div>
-
-  </body>
-  </html>
+  <div id="result-box">
+    <h3 id="result"></h3><br>
+      <button id="log-out-btn" class="btn-style">LOG OUT</button>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-firestore.js"></script>
+  <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+  <script>
+    const firebaseConfig = {
+    apiKey: "AIzaSyB2nGrX4pqoS0UfvPsqDbLnrPknpCmwOSw",
+    authDomain: "cpumon.firebaseapp.com",
+    projectId: "cpumon",
+    storageBucket: "cpumon.appspot.com",
+    messagingSenderId: "578477960455",
+    appId: "1:578477960455:web:20d8e244a9896d034ea9a2"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  </script>
+  <script type="module" src="form.js"></script>
+</body>
+</html>

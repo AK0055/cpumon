@@ -6,8 +6,10 @@ try {
       debug: true,
       watchRenderer: true
   });
-} catch (_) { console.log('Error'); }  
+} 
+catch (_) { console.log('Error'); }  
 
+var cpuusage=0,fmem=0,temp=0;
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -21,7 +23,7 @@ const createWindow = () => {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, 'form.html'));
+  mainWindow.loadFile(path.join(__dirname, 'index.html'));
   var si = require('systeminformation');
   var ip = require('ip');
   var sysInfo = {temp:0};
@@ -29,23 +31,35 @@ const createWindow = () => {
   function updateSi() { 
           si.cpuTemperature(function(data) {
             sysInfo.temp = data.max;
-            
       });
       return sysInfo.temp;
     }
-    var cpuusage=0;
-  setInterval(() => {
-    os.cpuUsage(function(v){
-      cpuusage=v*100;
-      mainWindow.webContents.send('cpu',v*100);
-      //console.log(cpuusage);
-      //mainWindow.webContents.send('sysload',os.loadavg(1));
-      mainWindow.webContents.send('mem',os.freememPercentage()*100);
-      mainWindow.webContents.send('total-mem',os.totalmem()/1024);
-      mainWindow.webContents.send('temp',updateSi());
-    });
-  },1000);
-   
+    
+    function giveall(a){
+       return a;
+    }
+    
+      //console.log(await Obj.getAll());
+      setInterval(() => {
+        os.cpuUsage(function(v){
+          cpuusage=v*100;
+          fmem=os.freememPercentage()*100;
+          temp=updateSi();
+          var today = new Date();
+          var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+          var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+          var dattime = date+' '+time;
+          var all=[cpuusage,fmem,temp,dattime];
+          mainWindow.webContents.send('cpu',v*100);
+          mainWindow.webContents.send('mem',os.freememPercentage()*100);
+          mainWindow.webContents.send('total-mem',os.totalmem()/1024);
+          mainWindow.webContents.send('temp',updateSi());
+          mainWindow.webContents.send('all',giveall(all));
+        });
+      },1000);
+      
+  
+    
 };
 
 // This method will be called when Electron has finished
