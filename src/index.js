@@ -30,7 +30,7 @@ const createWindow = () => {
   
   function updateSi() { 
           si.cpuTemperature(function(data) {
-            sysInfo.temp = data.max;
+            sysInfo.temp = data.main;
       });
       return sysInfo.temp;
     }
