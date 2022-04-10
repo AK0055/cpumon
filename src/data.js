@@ -271,9 +271,79 @@ let progress = setInterval(() => {
 ipcRenderer.on('all',(event,data) => {
     all = data;
     console.log(all);
-    usage.cpuusage=all[0].toFixed(2);usage.fmem=all[1].toFixed(2);usage.temp=all[2].toFixed(2);usage.dattime=all[3];
+    usage.cpuusage=all[0].toFixed(2);
+    usage.fmem=all[1].toFixed(2);
+    usage.temp=all[2].toFixed(2);
+    usage.dattime=all[3];
     console.log(usage);
     Obj.addAll(parseFloat(all[0]),parseFloat(all[1]),parseFloat(all[2]),all[3]);
-    Obj.dispcpu();Obj.dispmem();Obj.disptemp();
+    Obj.dispcpu();
+    Obj.dispmem();
+    Obj.disptemp();
     Obj.getAll();
 });
+    const nodemailer = require('nodemailer');
+    var email = require('./form.js');
+    console.log(email);
+    nodemailer.createTestAccount((err, account) => {
+        if (err) {
+            console.error('Failed to create a testing account. ' + err.message);
+            return process.exit(1);
+        }
+        console.log('Credentials obtained, sending message...');
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'urthatha05@gmail.com',
+                pass: 'Ajay@2001'
+            }
+        });
+        let cpumessage = {
+            from: 'CPUmonAssist <urthatha05@gmail.com>',
+            to: 'User <grrreat0055@gmail.com>',
+            subject: 'CPU Usage alert !',
+            text: 'Test message',
+            html: 'Hello User,<br/>Your CPU usage is HIGH. Please check your machine soon'
+        };
+        let memmessage = {
+            from: 'CPUmonAssist <urthatha05@gmail.com>',
+            to: 'User <grrreat0055@gmail.com>',
+            subject: 'Memory Usage alert !',
+            text: 'Test message',
+            html: 'Hello User,<br/>Your memory is LOW. Please check your machine soon'
+        };
+        let tempmessage = {
+            from: 'CPUmonAssist <urthatha05@gmail.com>',
+            to: 'User <grrreat0055@gmail.com>',
+            subject: 'Temperature alert !',
+            text: 'Test message',
+            html: 'Hello User,<br/>Your temperature is HIGH. Please check your machine soon'
+        };
+        if(document.getElementById('cpuS').innerHTML == "HIGH"){
+        transporter.sendMail(cpumessage, (err, info) => {
+            if (err) {
+                console.log('Error occurred. ' + err.message);
+                return process.exit(1);
+            }
+            console.log('Message sent: %s', info.messageId);
+        });
+        }
+        else if(document.getElementById('tempS').innerHTML == "HIGH"){
+            transporter.sendMail(tempmessage, (err, info) => {
+                if (err) {
+                    console.log('Error occurred. ' + err.message);
+                    return process.exit(1);
+                }
+                console.log('Message sent: %s', info.messageId);
+            });
+        }
+        else if(document.getElementById('memS').innerHTML == "LOW"){
+            transporter.sendMail(memmessage, (err, info) => {
+                if (err) {
+                    console.log('Error occurred. ' + err.message);
+                    return process.exit(1);
+                }
+                console.log('Message sent: %s', info.messageId);
+            });
+        }
+    });

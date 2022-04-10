@@ -24,7 +24,13 @@ document.getElementById("login-btn").addEventListener('click', function(){
    const loginEmail= document.getElementById("login-email").value;
    const loginPassword =document.getElementById("login-password").value;
    //console.log(firebaseConfig);
-
+   /* module.exports.email = async function() {
+    await emailsend();
+}
+  var emailsend = async function() {
+    console.log(loginEmail);
+    return loginEmail;
+  } */
    signInWithEmailAndPassword(auth, loginEmail, loginPassword)
   .then((userCredential) => {
     const user = userCredential.user;
@@ -75,3 +81,6 @@ document.getElementById("log-out-btn").addEventListener('click', function(){
   });
 
 });
+var email=document.getElementById("login-email").value;
+console.log(email);
+export default email;

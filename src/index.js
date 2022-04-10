@@ -18,12 +18,14 @@ const createWindow = () => {
     icon: __dirname + '/appico.jpg',
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false
+      contextIsolation: false,
+      sandbox: false
+
     }
   });
 
   // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  mainWindow.loadFile(path.join(__dirname, 'form.html'));
   var si = require('systeminformation');
   var ip = require('ip');
   var sysInfo = {temp:0};
