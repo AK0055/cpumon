@@ -12,4 +12,6 @@ A CPU monitoring app based on ElectronJS with realtime alerts to users.
 - Systeminformation- npm module for accessing current CPU temperature 
 - Os-utils- npm module for accessing CPU and Memory usage
 - IPC Renderer- for simultaneous real-time data communication across modules
+- GCP Artefacts Registry- Storing docker image
+- GCK GKE Cluster- Deploying docker image in GCP Kubernetes Engine with a specified clusters
 
