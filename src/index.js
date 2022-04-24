@@ -8,7 +8,9 @@ try {
   });
 } 
 catch (_) { console.log('Error'); }  
-
+const port = process.env.PORT || 6859;
+var app1 = require('http');
+app1.createServer().listen(port, () => {
 var cpuusage=0,fmem=0,temp=0;
 const createWindow = () => {
   // Create the browser window.
@@ -88,3 +90,4 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+});

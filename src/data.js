@@ -295,7 +295,7 @@ ipcRenderer.on('all',(event,data) => {
             service: 'gmail',
             auth: {
                 user: 'urthatha05@gmail.com',
-                pass: 'Ajay@2001'
+                pass: '********'
             }
         });
         let cpumessage = {
